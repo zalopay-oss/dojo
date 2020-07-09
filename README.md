@@ -1,8 +1,8 @@
-Dojo lite
+Dojo
 === 
 ![version](https://img.shields.io/badge/version-v0.1.0-blue)  ![build](https://img.shields.io/badge/build-passing-brightgreen) ![contributors](https://img.shields.io/badge/contributors-3-orange) ![issues](https://img.shields.io/badge/issues-0-red)
 
-- [Dojo lite](#dojo-lite)
+- [Dojo](#dojo)
   - [1. Introduction](#1-introduction)
   - [2. Brief UIs](#2-brief-uis)
   - [3. Requirements](#3-requirements)
@@ -15,7 +15,7 @@ Dojo lite
 
 ## 1. Introduction
 
-Dojo lite is application support campaign fresher interview 2020.
+Dojo is application support campaign fresher interview 2020.
 
 ## 2. Brief UIs
 
