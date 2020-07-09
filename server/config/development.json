@@ -1,0 +1,3 @@
+{
+  "uriMongo": "mongodb://root:admin@localhost:27017/zalopay-dojo"
+}

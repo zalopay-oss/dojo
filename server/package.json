@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.12.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.6",
+    "swagger-express-mw": "^0.7.0"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test"
+  }
+}

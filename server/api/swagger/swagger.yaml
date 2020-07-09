@@ -1,0 +1,313 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Hello World App
+# during dev, should point to your local machine
+host: localhost:8644
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /login:
+    x-swagger-router-controller: user
+    post:
+      description: Logs user into the system
+      operationId: login
+      parameters:
+        - name: request
+          in: body
+          description: Login
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequest"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /user:
+    x-swagger-router-controller: user
+    get:
+      description: Get users
+      operationId: query
+      parameters:
+        - name: token
+          in: query
+          description: Token
+          required: true
+          type: string
+        - name: username
+          in: query
+          type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/UserQueryResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Create user
+      operationId: create
+      parameters:
+        - name: request
+          in: body
+          description: Request create user
+          required: true
+          schema:
+            $ref: "#/definitions/UserCreateRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Update user
+      operationId: update
+      parameters:
+        - name: request
+          in: body
+          description: Request update user
+          required: true
+          schema:
+            $ref: "#/definitions/UserUpdateRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      description: Remove user
+      operationId: remove
+      parameters:
+        - name: request
+          in: body
+          description: Request remove user
+          required: true
+          schema:
+            $ref: "#/definitions/UserRemoveRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /question:
+    x-swagger-router-controller: question
+    get:
+      description: Get question
+      operationId: query
+      parameters:
+        - name: token
+          in: query
+          description: Token
+          required: true
+          type: string
+        - name: category
+          in: query
+          type: number
+        - name: level
+          in: query
+          type: number
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/QuestionQueryResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Create question
+      operationId: create
+      parameters:
+        - name: request
+          in: body
+          description: Request create question
+          required: true
+          schema:
+            $ref: "#/definitions/QuestionCreateRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      description: Remove question
+      operationId: remove
+      parameters:
+        - name: request
+          in: body
+          description: Request remove question
+          required: true
+          schema:
+            $ref: "#/definitions/QuestionRemoveRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  Response:
+    properties:
+      code:
+        type: number
+      message:
+        type: string
+  ErrorResponse:
+    properties:
+      code:
+        type: number
+      message:
+        type: string
+  LoginRequest:
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  LoginResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/UserLogin"
+  UserLogin:
+    properties:
+      username:
+        type: string
+      role:
+        type: number
+      token:
+        type: string
+  UserCreateRequest:
+    properties:
+      username:
+        type: string
+      role:
+        type: number
+      token:
+        type: string
+  UserUpdateRequest:
+    properties:
+      username:
+        type: string
+      role:
+        type: number
+      isActive:
+        type: boolean
+      _id:
+        type: string
+      token:
+        type: string
+  UserRemoveRequest:
+    properties:
+      _id:
+        type: string
+      token:
+        type: string
+  UserQueryResponse:
+    properties:
+      code:
+        type: number
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/User"
+  User:
+    properties:
+      _id:
+        type: string
+      username:
+        type: string
+      role:
+        type: number
+      isAcctive:
+        type: boolean
+  QuestionCreateRequest:
+    properties:
+      questions:
+        type: array
+        items:
+          $ref: "#/definitions/QuestionCreate"
+      token:
+        type: string
+  QuestionRemoveRequest:
+    properties:
+      _id:
+        type: string
+      token:
+        type: string
+  QuestionQueryResponse:
+    properties:
+      code:
+        type: number
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/Question"
+  Question:
+    properties:
+      _id:
+        type: string
+      category:
+        type: number
+      level:
+        type: number
+      content:
+        type: string
+      hint:
+        type: string
+      campaign:
+        type: string
+  QuestionCreate:
+    properties:
+      category:
+        type: number
+      level:
+        type: number
+      content:
+        type: string
+      hint:
+        type: string

@@ -1,0 +1,50 @@
+// mixins for grid system
+// ------------------------
+.gx-make-row() {
+  margin-left: (@grid-gutter-width / -2);
+  margin-right: (@grid-gutter-width / -2);
+}
+
+.make-grid-columns() {
+  .col(@index) {
+    @item: ~".@{ant-prefix}-col-@{index}, .@{ant-prefix}-col-xs-@{index}, .@{ant-prefix}-col-sm-@{index}, .@{ant-prefix}-col-md-@{index}, .@{ant-prefix}-col-lg-@{index}";
+    .col((@index + 1), @item);
+  }
+  .col(@index, @list) when (@index =< @grid-columns) {
+    @item: ~".@{ant-prefix}-col-@{index}, .@{ant-prefix}-col-xs-@{index}, .@{ant-prefix}-col-sm-@{index}, .@{ant-prefix}-col-md-@{index}, .@{ant-prefix}-col-lg-@{index}";
+    .col((@index + 1), ~"@{list}, @{item}");
+  }
+  .col(@index, @list) when (@index > @grid-columns) {
+    @{list} {
+      // Prevent columns from collapsing when empty
+      padding-left: (@grid-gutter-width / 2);
+      padding-right: (@grid-gutter-width / 2);
+      float: none !important;
+    }
+  }
+  .col(1);
+}
+
+// Grid system
+.ant-row {
+  .gx-make-row();
+  .flex-display(flex, row, wrap);
+
+  & > [class*="ant-col-"] {
+    margin: 0 -0.3px;
+  }
+}
+
+.@{class-prefix}-col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  padding-left: (@grid-gutter-width / 2);
+  padding-right: (@grid-gutter-width / 2);
+}
+
+.@{class-prefix}-col-full {
+  @media screen and (max-width: (@screen-xs-max - 95px)) {
+    width: 100%;
+  }
+}
